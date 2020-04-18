@@ -6,25 +6,30 @@
 
         <app-alert [message]="error" *ngIf="error"></app-alert>
 
-        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+        <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" *ngIf="!isLoading">
             <div class="form-group">
                 <label for="email">E-Mail</label>
-                <input type="email" id="email" class="form-control" ngModel required email name="nm_email" />
+                <input type="email" id="email" class="form-control" [ngModel]="userDtl.user_name" required email
+                    name="nm_email" />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" class="form-control" ngModel required minlength="6"
-                    name="nm_password" />
+                    name="nm_password"
+                    [value]="editMode ? '123456' : '' "
+                    [disabled]="editMode" />
             </div>
             <div class="form-group">
                 <label for="status">User Type</label>
-                <select id="status" class="form-control" ngModel required name="nm_user_type">
-                    <option value="admin">Admin</option>
-                    <option value="panelist">Panelist</option>
+                <select id="status" class="form-control" [ngModel]="userDtl.user_type" required
+                    name="nm_user_type">
+                    <option value="Admin">Admin</option>
+                    <option value="Panelist">Panelist</option>
                 </select>
             </div>
             <div>
-                <button class="btn btn-primary" type="submit" [disabled]="authForm.invalid">Create User</button>
+                <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">
+                    {{ editMode ? 'Update User' :  'Create User'}}</button>
             </div>
         </form>
     </div>

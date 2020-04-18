@@ -4,6 +4,7 @@ import { AuthService, AuthResponseData } from './auth.service';
 import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertComponent } from '../shared/alert/alert.component';
+import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
   selector: 'app-auth',
@@ -16,7 +17,7 @@ export class AuthComponent implements OnDestroy {
 
   constructor(private authSvc: AuthService,
     private router: Router,
-    private componentFactoryResolver: ComponentFactoryResolver) { }
+    private dataSvc: DataStorageService) { }
 
   onSwitchMode() {
     this.isLoginMode = !this.isLoginMode;
@@ -25,6 +26,10 @@ export class AuthComponent implements OnDestroy {
   onSubmit(authForm: NgForm) {
     this.error = null;
 
+    if (!this.isLoginMode) {
+      alert("Sign Up mode is disabled. Please use Login mode. Contact Administrator to get username and password.");
+      return;
+    }
     const email = authForm.value.nm_email;
     const password = authForm.value['nm_password'];
 
@@ -37,7 +42,7 @@ export class AuthComponent implements OnDestroy {
     if (!this.isLoginMode && authForm.valid) {
       console.log("Signing up");
       //Signup
-      authObs = this.authSvc.signup(email, password);
+      authObs = this.authSvc.signup(email, password, true);
     }
     else if (authForm.valid) {
       //Login
@@ -48,7 +53,12 @@ export class AuthComponent implements OnDestroy {
       response => {
         console.log(response);
         this.isLoading = false;
-        this.router.navigate(["/recipes"]);
+        this.router.navigate(["/"]);
+        this.dataSvc.isUserAnAdmin(email).subscribe(
+          response => {
+            this.authSvc.setIsAdmin(response['user_type'] === 'Admin');
+          }
+        );
       },
       errMsg => {
         this.error = errMsg;

@@ -4,6 +4,9 @@ import { catchError, tap } from 'rxjs/operators';
 import { throwError, Subject, BehaviorSubject } from 'rxjs';
 import { User } from './user.model';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
+import { DataStorageService } from '../shared/data-storage.service';
+import { error } from 'protractor';
 
 export interface AuthResponseData {
     idToken: string;
@@ -19,10 +22,13 @@ export class AuthService {
     //Same as subject, but can be used to get last emitted value without even subscribing.
     user = new BehaviorSubject<User>(null);
     private logoutTimer: any;
+    isUserAdmin = false;
+    adminFlagchanged = new Subject<boolean>();
 
     token: string = null;
     constructor(private http: HttpClient,
-        private router: Router) { }
+        private router: Router,
+        private dataSvc: DataStorageService) { }
 
     //Sign Up URL
     //Template : https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=[API_KEY]
@@ -32,27 +38,54 @@ export class AuthService {
     //Template : https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=[API_KEY]
     //Actual : https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD_pxwEL_BK3GBldh4hC4gNQT5Ugf-LLJM
 
+    setIsAdmin(isAdmin) {
+        this.isUserAdmin = isAdmin;
+        this.adminFlagchanged.next(this.isUserAdmin);
+    }
 
-    signup(email: string, password: string) {
+    isAdmin() {
+        return this.isUserAdmin;
+    }
+
+    updatePassword(email: string, password: string, updateSessionData: boolean) {
 
         return this.http
-            .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyD_pxwEL_BK3GBldh4hC4gNQT5Ugf-LLJM',
+            .post<AuthResponseData>(environment.updatePasswordUrl + environment.apiKey,
                 {
                     email: email,
                     password: password,
                     returnSecureToken: true
                 })
             .pipe(catchError(err => { return this.handleError(err) }), tap(resData => {
-                this.handleAuthentication(resData.email,
-                    resData.localId,
-                    resData.idToken,
-                    +resData.expiresIn);
+                if (updateSessionData)
+                    this.handleAuthentication(resData.email,
+                        resData.localId,
+                        resData.idToken,
+                        +resData.expiresIn);
+            }));
+    }
+
+    signup(email: string, password: string, updateSessionData: boolean) {
+
+        return this.http
+            .post<AuthResponseData>(environment.signupUrl + environment.apiKey,
+                {
+                    email: email,
+                    password: password,
+                    returnSecureToken: true
+                })
+            .pipe(catchError(err => { return this.handleError(err) }), tap(resData => {
+                if (updateSessionData)
+                    this.handleAuthentication(resData.email,
+                        resData.localId,
+                        resData.idToken,
+                        +resData.expiresIn);
             }));
     }
 
     login(email: string, password: string) {
         return this.http
-            .post<AuthResponseData>('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD_pxwEL_BK3GBldh4hC4gNQT5Ugf-LLJM',
+            .post<AuthResponseData>(environment.loginUrl + environment.apiKey,
                 {
                     email: email,
                     password: password,
@@ -65,13 +98,14 @@ export class AuthService {
                     resData.idToken,
                     +resData.expiresIn);
             }));
-
     }
 
     logout() {
         this.user.next(null);
         this.router.navigate(['/auth']);
         localStorage.removeItem('userData');
+        this.setIsAdmin(false);
+
         if (this.logoutTimer) {
             clearTimeout(this.logoutTimer);
         }
@@ -121,6 +155,12 @@ export class AuthService {
                 let expiresIn = new Date(userData._tokenExpirationDate).getTime() - new Date().getTime();
                 this.autoLogout(expiresIn);
             }
+
+            this.dataSvc.isUserAnAdmin(userData.email).subscribe(
+                response => {
+                    this.setIsAdmin(response['user_type'] === 'Admin');
+                }
+            );
         }
     }
 

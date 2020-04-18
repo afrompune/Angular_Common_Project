@@ -13,6 +13,7 @@ import { AlertComponent } from './shared/alert/alert.component';
 import { UsersComponent } from './user/users/users.component';
 import { UserStartComponent } from './user/user-start/user-start.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,11 @@ import { UserEditComponent } from './user/user-edit/user-edit.component';
     HttpClientModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptorService,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
