@@ -7,7 +7,7 @@ export class UserDetailsService {
     usersChanged = new Subject<UserDetails[]>();
 
     private users_list: UserDetails[] = [
-        new UserDetails('User 1', 'Admin')
+        new UserDetails('abhaykumar.lodha@morganstanley.com', 'Admin')
     ];
 
     constructor() { }
