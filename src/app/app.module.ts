@@ -10,6 +10,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth/auth.component';
 import { LoadingSpinnerComponent } from './shared/loading-spinner/loading-spinner.component';
 import { AlertComponent } from './shared/alert/alert.component';
+import { UsersComponent } from './user/users/users.component';
+import { UserStartComponent } from './user/user-start/user-start.component';
+import { UserEditComponent } from './user/user-edit/user-edit.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +22,9 @@ import { AlertComponent } from './shared/alert/alert.component';
     AuthComponent,
     LoadingSpinnerComponent,
     AlertComponent,
+    UsersComponent,
+    UserStartComponent,
+    UserEditComponent
   ],
   imports: [
     BrowserModule,
