@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Subscription } from 'rxjs';
+import { UserDetails } from '../user/user-details.model';
+import { User } from '../auth/user.model';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit {
   isAdminAuthenticated = false;
   isPanelistAuthenticated = false;
+  user: User = null;
   subscription: Subscription;
   sessionTimer: number = 0;
   sessionTimerAsString: string = "00:00:00";
@@ -20,6 +23,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.authSvc.user.subscribe(user => {
+      this.user = user;
       this.isPanelistAuthenticated = !!user;
       if (!!user) {
         let eTime = user.expirationDate.getTime();
@@ -29,10 +33,7 @@ export class HeaderComponent implements OnInit {
       }
     })
 
-    this.isAdminAuthenticated = localStorage.getItem('isAdmin') === "True";
-    console.log("Header Subscribed to adminFlagchanged");
     this.authSvc.adminFlagchanged.subscribe((isAdmin) => {
-      console.log("Header : Received isAdmin " + isAdmin);
       this.isAdminAuthenticated = isAdmin;
     });
 
@@ -40,7 +41,6 @@ export class HeaderComponent implements OnInit {
 
   handleTime() {
     if (this.timer && this.sessionTimer < 1) {
-      console.log("Stopping timer now.");
       clearInterval(this.timer);
       return;
     }

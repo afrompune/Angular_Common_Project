@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-xs-10">
+        <app-requirement-edit></app-requirement-edit>
+        <hr>
+        <!-- <button class="btn btn-success" type="button" (click)="onLoadSkills()">Load existing requirements</button> | -->
+        <button class="btn btn-danger" type="button" (click)="onSubmit()">Submit Changes</button>
+        <hr>
+        <ul class="list-group">
+            <a class="list-group-item" style="cursor: pointer" *ngFor="let requirement of requirements | filterRequirements:'Select skill'; let i = index"
+                (click)="onEditItem(i)">
+                {{ requirement.skill.asString }} | {{ requirement.location.name }}
+            </a>
+        </ul>
+    </div>
+</div>

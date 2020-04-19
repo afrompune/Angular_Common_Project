@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-5">
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-success" (click)="onNewRecipe()">New Profile</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-12">
+                <a style="cursor: pointer;" [routerLink]="[index]" routerLinkActive="active"
+                    class="list-group-item clearfix" *ngFor="let profile of profiles; let i = index">
+                    
+                    <div class="pull-left">
+                        <h4 class="list-group-item-heading">{{ profile.name }}</h4>
+                        <p class="list-group-item-text">{{ profile.contactNumber }}</p>
+                        <p class="list-group-item-text">{{ profile.matchingRequirement.skill.asString }}</p>
+                        <p class="list-group-item-text">{{ profile.matchingRequirement.location.name }}</p>
+                    </div>
+                    <!-- <span class="pull-right">
+                        <img [src]="recipe.imagePath" alt="{{ recipe.name }}" class="img-responsive"
+                            style="max-height: 50px;">
+                    </span> -->
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-7">
+        <router-outlet></router-outlet>
+    </div>
+</div>

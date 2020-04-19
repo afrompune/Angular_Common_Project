@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-xs-10">
+        <app-skill-edit></app-skill-edit>
+        <hr>
+        <!-- <button class="btn btn-success" type="button" (click)="onLoadSkills()">Load existing skills</button> | -->
+        <button class="btn btn-danger" type="button" (click)="onSubmit()">Submit Changes</button>
+        <hr>
+        <ul class="list-group">
+            <a class="list-group-item" style="cursor: pointer" *ngFor="let skill of skills; let i = index"
+                (click)="onEditItem(i)">
+                {{ skill.asString }}
+            </a>
+        </ul>
+    </div>
+</div>

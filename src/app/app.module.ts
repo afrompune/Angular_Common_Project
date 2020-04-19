@@ -14,6 +14,16 @@ import { UsersComponent } from './user/users/users.component';
 import { UserStartComponent } from './user/user-start/user-start.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { UsersResolverService } from './user/users-resolver.service';
+import { SkillsComponent } from './skills/skills.component';
+import { SkillEditComponent } from './skills/skill-edit/skill-edit.component';
+import { LocationsComponent } from './locations/locations.component';
+import { LocationEditComponent } from './locations/location-edit/location-edit.component';
+import { RequirementsComponent } from './requirements/requirements.component';
+import { RequirementEditComponent } from './requirements/requirement-edit/requirement-edit.component';
+import { RequirementFilterPipe } from './requirements/requirement-filter.pipe';
+import { ProfilesComponent } from './profiles/profiles.component';
+import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +35,16 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
     AlertComponent,
     UsersComponent,
     UserStartComponent,
-    UserEditComponent
+    UserEditComponent,
+    SkillsComponent,
+    SkillEditComponent,
+    LocationsComponent,
+    LocationEditComponent,
+    RequirementsComponent,
+    RequirementEditComponent,
+    RequirementFilterPipe,
+    ProfilesComponent,
+    ProfileEditComponent
   ],
   imports: [
     BrowserModule,

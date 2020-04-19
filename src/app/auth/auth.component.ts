@@ -40,7 +40,6 @@ export class AuthComponent implements OnDestroy {
     let authObs: Observable<AuthResponseData>;
 
     if (!this.isLoginMode && authForm.valid) {
-      console.log("Signing up");
       //Signup
       authObs = this.authSvc.signup(email, password, true);
     }
@@ -51,12 +50,11 @@ export class AuthComponent implements OnDestroy {
 
     authObs.subscribe(
       response => {
-        console.log(response);
         this.isLoading = false;
         this.router.navigate(["/"]);
         this.dataSvc.isUserAnAdmin(email).subscribe(
           response => {
-            this.authSvc.setIsAdmin(response['user_type'] === 'Admin');
+            this.authSvc.setIsAdmin(response);
           }
         );
       },

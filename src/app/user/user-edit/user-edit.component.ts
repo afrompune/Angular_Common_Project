@@ -24,11 +24,14 @@ export class UserEditComponent implements OnInit, OnDestroy {
     private authSvc: AuthService) { }
 
   ngOnInit() {
+
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.editMode = params['id'] != null;
       this.initForm();
     });
+
+
   }
 
   private initForm() {
@@ -46,10 +49,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
       this.userSvc.updateUser(this.id, userDtl);
     }
     else {
-      this.userSvc.addUser(userDtl);
       this.authSubscription1 = this.authSvc.signup(userDtl.user_name, userForm.value.nm_password, false).subscribe(
         (response) => {
           console.log("Add User Response " + response);
+          this.userSvc.addUser(userDtl);
         },
         (err) => {
           this.error = err

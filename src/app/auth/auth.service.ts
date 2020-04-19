@@ -158,7 +158,7 @@ export class AuthService {
 
             this.dataSvc.isUserAnAdmin(userData.email).subscribe(
                 response => {
-                    this.setIsAdmin(response['user_type'] === 'Admin');
+                    this.setIsAdmin(response);
                 }
             );
         }
