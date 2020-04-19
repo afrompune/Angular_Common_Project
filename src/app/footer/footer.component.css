@@ -1,0 +1,11 @@
+.btm {
+    position : fixed;
+    bottom : 0;
+    left : 0;
+    width : 100vw;
+    background : rgba(149, 179, 212, 0.75);
+}
+.t {
+    height : 100vh;
+    z-index : 50;
+}

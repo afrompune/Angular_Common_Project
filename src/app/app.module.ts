@@ -24,6 +24,7 @@ import { RequirementEditComponent } from './requirements/requirement-edit/requir
 import { RequirementFilterPipe } from './requirements/requirement-filter.pipe';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.compo
     RequirementEditComponent,
     RequirementFilterPipe,
     ProfilesComponent,
-    ProfileEditComponent
+    ProfileEditComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
