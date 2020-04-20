@@ -5,6 +5,7 @@ import { Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AlertComponent } from '../shared/alert/alert.component';
 import { DataStorageService } from '../shared/data-storage.service';
+import { ApplicationEventService, ApplicationEvent } from '../shared/application-event.service';
 
 @Component({
   selector: 'app-auth',
@@ -13,21 +14,21 @@ import { DataStorageService } from '../shared/data-storage.service';
 export class AuthComponent implements OnDestroy {
   isLoginMode = true;
   isLoading = false;
-  error = null;
 
   constructor(private authSvc: AuthService,
     private router: Router,
-    private dataSvc: DataStorageService) { }
+    private dataSvc: DataStorageService,
+    private evtSvc: ApplicationEventService) { }
 
   onSwitchMode() {
-    this.isLoginMode = !this.isLoginMode;
+    if (this.isLoginMode) {
+      this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Can't Signup. Please use Login mode or contact Administrator to get registered."));
+      //this.isLoginMode = !this.isLoginMode;
+    }
   }
 
   onSubmit(authForm: NgForm) {
-    this.error = null;
-
     if (!this.isLoginMode) {
-      alert("Sign Up mode is disabled. Please use Login mode. Contact Administrator to get username and password.");
       return;
     }
     const email = authForm.value.nm_email;
@@ -59,7 +60,7 @@ export class AuthComponent implements OnDestroy {
         );
       },
       errMsg => {
-        this.error = errMsg;
+        this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", errMsg));
         this.isLoading = false;
       }
     );

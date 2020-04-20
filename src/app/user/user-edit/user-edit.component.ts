@@ -5,6 +5,7 @@ import { UserDetailsService } from '../user-detail.service';
 import { UserDetails } from '../user-details.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
+import { ApplicationEventService, ApplicationEvent } from 'src/app/shared/application-event.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -15,13 +16,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
   id: number;
   editMode: boolean;
   userDtl: UserDetails = new UserDetails('', '');
-  error: string = '';
   authSubscription1: Subscription;
   authSubscription2: Subscription;
 
   constructor(private route: ActivatedRoute,
     private userSvc: UserDetailsService,
-    private authSvc: AuthService) { }
+    private authSvc: AuthService,
+    private evtSvc: ApplicationEventService) { }
 
   ngOnInit() {
 
@@ -55,7 +56,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
           this.userSvc.addUser(userDtl);
         },
         (err) => {
-          this.error = err
+          //this.error = err
+          this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", err));
         }
       );
 

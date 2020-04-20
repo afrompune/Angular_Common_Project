@@ -4,8 +4,6 @@
             <app-loading-spinner></app-loading-spinner>
         </div>
 
-        <app-alert [message]="error" *ngIf="error"></app-alert>
-
         <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)" *ngIf="!isLoading">
             <div class="form-group">
                 <label for="email">E-Mail</label>

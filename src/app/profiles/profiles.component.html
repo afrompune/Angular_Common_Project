@@ -8,9 +8,16 @@
         <hr>
         <div class="row">
             <div class="col-xs-12">
+                <label for="">Filter by (Name/Number) : </label>
+                <input type="text" [(ngModel)]="filterString">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
                 <a style="cursor: pointer;" [routerLink]="[index]" routerLinkActive="active"
-                    class="list-group-item clearfix" *ngFor="let profile of profiles; let i = index">
-                    
+                    class="list-group-item clearfix"
+                    *ngFor="let profile of profiles | filterListValues:'Profile':filterString; let i = index">
+
                     <div class="pull-left">
                         <h4 class="list-group-item-heading">{{ profile.name }}</h4>
                         <p class="list-group-item-text">{{ profile.contactNumber }}</p>

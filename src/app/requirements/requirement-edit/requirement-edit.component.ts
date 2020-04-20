@@ -17,7 +17,7 @@ export class RequirementEditComponent implements OnInit, OnDestroy {
   requirements: Requirement[] = [];
   subscriptionSkill: Subscription;
   subscriptionLocation: Subscription;
-  subscriptionRequirement: Subscription;
+  // subscriptionRequirement: Subscription;
   subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
@@ -38,7 +38,7 @@ export class RequirementEditComponent implements OnInit, OnDestroy {
 
     this.loadSkills();
     this.loadLocations();
-    this.loadRequirements();
+    //this.loadRequirements();
     this.subscription = this.requirementSvc.startedEditing.subscribe((id: number) => {
       this.editedItemIndex = +id;
       this.selectedRequirement = this.requirementSvc.getRequirement(id);
@@ -95,21 +95,21 @@ export class RequirementEditComponent implements OnInit, OnDestroy {
 
   }
 
-  loadRequirements() {
+  // loadRequirements() {
 
-    this.dataSvc.downloadRequirements();
-    this.requirements = this.requirementSvc.getRequirements();
-    //this.requirements.push(this.selectedRequirement);
+  //   this.dataSvc.downloadRequirements();
+  //   this.requirements = this.requirementSvc.getRequirements();
+  //   //this.requirements.push(this.selectedRequirement);
 
-    this.subscriptionRequirement = this.requirementSvc.requirementsChanged
-      .subscribe(
-        (requirements: Requirement[]) => {
-          this.requirements = requirements;
-          //this.requirements.push(this.selectedRequirement);
-        }
-      );
+  //   this.subscriptionRequirement = this.requirementSvc.requirementsChanged
+  //     .subscribe(
+  //       (requirements: Requirement[]) => {
+  //         this.requirements = requirements;
+  //         //this.requirements.push(this.selectedRequirement);
+  //       }
+  //     );
 
-  }
+  // }
 
   onClear() {
     this.requirementForm.reset();
@@ -126,8 +126,8 @@ export class RequirementEditComponent implements OnInit, OnDestroy {
       this.subscriptionSkill.unsubscribe();
     if (this.subscriptionLocation)
       this.subscriptionLocation.unsubscribe();
-    if (this.subscriptionRequirement)
-      this.subscriptionRequirement.unsubscribe();
+    // if (this.subscriptionRequirement)
+    //   this.subscriptionRequirement.unsubscribe();
     if (this.subscription)
       this.subscription.unsubscribe();
   }

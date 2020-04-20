@@ -14,7 +14,6 @@ import { UsersComponent } from './user/users/users.component';
 import { UserStartComponent } from './user/user-start/user-start.component';
 import { UserEditComponent } from './user/user-edit/user-edit.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { UsersResolverService } from './user/users-resolver.service';
 import { SkillsComponent } from './skills/skills.component';
 import { SkillEditComponent } from './skills/skill-edit/skill-edit.component';
 import { LocationsComponent } from './locations/locations.component';
@@ -25,6 +24,7 @@ import { RequirementFilterPipe } from './requirements/requirement-filter.pipe';
 import { ProfilesComponent } from './profiles/profiles.component';
 import { ProfileEditComponent } from './profiles/profile-edit/profile-edit.component';
 import { FooterComponent } from './footer/footer.component';
+import { FilterListValuesPipe } from './shared/filter-list-values.pipe';
 
 @NgModule({
   declarations: [
@@ -46,7 +46,8 @@ import { FooterComponent } from './footer/footer.component';
     RequirementFilterPipe,
     ProfilesComponent,
     ProfileEditComponent,
-    FooterComponent
+    FooterComponent,
+    FilterListValuesPipe
   ],
   imports: [
     BrowserModule,

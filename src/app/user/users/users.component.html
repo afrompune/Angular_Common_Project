@@ -3,14 +3,22 @@
     <button class="btn btn-primary" [routerLink]="['/','users','adduser']">Add New User</button>
     <hr>
 
+    <div class="row">
+      <div class="col-xs-12">
+        <label for="">Filter by (Email) : </label>
+        <input type="text" [(ngModel)]="filterString">
+      </div>
+    </div>
+
     <ul class="list-group">
-      <a class="list-group-item text-break" style="cursor: pointer" *ngFor="let usrDtl of userDetails; let i = index"
+      <a class="list-group-item text-break" style="cursor: pointer"
+        *ngFor="let usrDtl of userDetails | filterListValues:'UserDetail':filterString; let i = index"
         [routerLink]="['edit',i]" align="right">
         {{ usrDtl.user_name }} ({{ usrDtl.user_type }})
       </a>
     </ul>
   </div>
-  <div  class="col-xs-12 col-md-8 col-lg-6">
+  <div class="col-xs-12 col-md-8 col-lg-6">
     <router-outlet></router-outlet>
   </div>
 </div>

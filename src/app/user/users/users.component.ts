@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class UsersComponent implements OnInit, OnDestroy {
   userDetails: UserDetails[] = [];
   subscription: Subscription;
+  filterString = '';
 
   constructor(private usrDtl: UserDetailsService) { }
 

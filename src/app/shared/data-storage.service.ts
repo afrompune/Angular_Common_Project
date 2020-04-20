@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { Skill, SkillsService } from '../skills/skill.service';
 import { LocationsService, Location } from '../locations/location.service';
 import { Requirement, RequirementsService } from '../requirements/requirements.service';
+import { ApplicationEvent, ApplicationEventService } from './application-event.service';
 
 @Injectable({ providedIn: 'root' })
 export class DataStorageService {
@@ -13,6 +14,7 @@ export class DataStorageService {
         private skillSvc: SkillsService,
         private locationSvc: LocationsService,
         private requirementSvc: RequirementsService,
+        private evtSvc: ApplicationEventService
     ) { }
 
     fetchAllUserDetails() {
@@ -29,7 +31,9 @@ export class DataStorageService {
                 'user_type': user_type
             }
         ).subscribe(
-            () => { return "OK"; },
+            () => {
+                this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "User added/updated successfully."));
+            },
             error => { console.log(error); }
         )
 
@@ -51,7 +55,9 @@ export class DataStorageService {
         this.http.put(
             environment.skillsDataUrl + ".json",
             skills
-        ).subscribe();
+        ).subscribe(() => {
+            this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Skills successfully uploaded to central server."));
+        });
     }
 
     downloadSkills() {
@@ -62,6 +68,7 @@ export class DataStorageService {
         }))
             .subscribe((skills) => {
                 this.skillSvc.setSkills(skills);
+                this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Skills successfully downloaded from central server."));
             }
             );
     }
@@ -70,7 +77,9 @@ export class DataStorageService {
         this.http.put(
             environment.locationsDataUrl + ".json",
             locations
-        ).subscribe();
+        ).subscribe(() => {
+            this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Locations successfully uploaded to central server."));
+        });
     }
 
     downloadLocations() {
@@ -81,6 +90,7 @@ export class DataStorageService {
         }))
             .subscribe((locations) => {
                 this.locationSvc.setLocations(locations);
+                this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Locations successfully downloaded from central server."));
             }
             );
     }
@@ -89,7 +99,9 @@ export class DataStorageService {
         this.http.put(
             environment.requirementsDataUrl + ".json",
             requirements
-        ).subscribe();
+        ).subscribe(() => {
+            this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Requirements successfully uploaded to central server."));
+        });
     }
 
     downloadRequirements() {
@@ -100,6 +112,7 @@ export class DataStorageService {
         }))
             .subscribe((requirements) => {
                 this.requirementSvc.setRequirements(requirements);
+                this.evtSvc.generateEvent(new ApplicationEvent("ForAlertComponent", "Requirements successfully downloaded from central server."));
             }
             );
     }
