@@ -33,6 +33,7 @@ export class UserDetailsService {
                 ),
                 tap(users_list => {
                     this.users_list = users_list;
+                    this.usersChanged.next(this.users_list.slice());
                 })
             );
     }

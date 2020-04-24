@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.usrDtl.fetchUserList().subscribe((usrDetails) => { this.userDetails = usrDetails; });
+    this.usrDtl.usersChanged.subscribe((usrDetails) => { this.userDetails = usrDetails; });
 
   }
 

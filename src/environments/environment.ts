@@ -7,10 +7,14 @@ export const environment = {
   signupUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
   updatePasswordUrl: "https://identitytoolkit.googleapis.com/v1/accounts:update?key=",
   loginUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=",
-  userDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/users",
-  skillsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/skills",
-  locationsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/locations",
-  requirementsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/requirements",
+  //userDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/users",
+  userDataUrl: "http://localhost:8080/users",
+  //skillsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/skills",
+  skillsDataUrl: "http://localhost:8080/skills",
+  //locationsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/locations",
+  locationsDataUrl: "http://localhost:8080/locations",
+  //requirementsDataUrl: "https://ng-course-recipe-book-3c101.firebaseio.com/requirements",
+  requirementsDataUrl: "http://localhost:8080/requirements",
   apiKey: "AIzaSyD_pxwEL_BK3GBldh4hC4gNQT5Ugf-LLJM"
 
 };
