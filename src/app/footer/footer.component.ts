@@ -22,13 +22,15 @@ export class FooterComponent implements OnInit {
 
   ngOnInit() {
     this.subscription = this.authSvc.user.subscribe(user => {
-      this.user = user;
-      this.isPanelistAuthenticated = !!user;
-      if (!!user) {
-        let eTime = user.expirationDate.getTime();
-        let cTime = new Date().getTime();
-        this.sessionTimer = +(((eTime - cTime) / 1000).toFixed());
-        this.timer = setInterval(() => this.handleTime(), 1000);
+      if (user) {
+        this.user = user;
+        this.isPanelistAuthenticated = !!user;
+        if (!!user) {
+          let eTime = user.expirationDate.getTime();
+          let cTime = new Date().getTime();
+          this.sessionTimer = +(((eTime - cTime) / 1000).toFixed());
+          this.timer = setInterval(() => this.handleTime(), 1000);
+        }
       }
     })
 

@@ -88,6 +88,7 @@ export class AuthService {
             .post<AuthResponseData>(environment.loginUrl + environment.apiKey,
                 {
                     email: email,
+                    username: email,
                     password: password,
                     returnSecureToken: true
                 }
