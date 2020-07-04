@@ -8,13 +8,13 @@
             <div class="form-group">
                 <label for="email">E-Mail</label>
                 <input type="email" id="email" class="form-control" [ngModel]="userDtl.user_name"
-                required email
+                required
                 name="nm_email"
                 [readonly]="editMode" />
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" class="form-control" ngModel required minlength="6"
+                <input type="password" id="password" class="form-control" ngModel
                     name="nm_password"
                     [value]="editMode ? '123456' : '' "
                     [disabled]="editMode"/>

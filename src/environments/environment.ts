@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  signupUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
+  // signupUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=",
   updatePasswordUrl: "https://identitytoolkit.googleapis.com/v1/accounts:update?key=",
   
   // loginUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=",
@@ -15,6 +15,7 @@ export const environment = {
   apiKey: "AIzaSyD_pxwEL_BK3GBldh4hC4gNQT5Ugf-LLJM",
 
   //Localhost specific settings
+  signupUrl: "http://localhost:8080/register?key=",
   loginUrl: "http://localhost:8080/authenticate?key=",
   userDataUrl: "http://localhost:8080/users",
   skillsDataUrl: "http://localhost:8080/skills",
